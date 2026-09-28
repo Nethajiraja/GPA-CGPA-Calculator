@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import SubjectRow from './SubjectRow'
 import { calculateGPA } from '../utils/calculations'
 
 let nextId = 4
 const createSubject = (id) => ({ id, name: '', credits: '', grade: '' })
 
-export default function GpaCalculator({ initialSubjects }) {
+export default function GpaCalculator() {
   const [subjects, setSubjects] = useState(() => [
     createSubject(1),
     createSubject(2),
@@ -13,14 +13,6 @@ export default function GpaCalculator({ initialSubjects }) {
   ])
   const [result, setResult] = useState({ totalCredits: 0, totalCreditPoints: 0, gpa: 0 })
   const [error, setError] = useState('')
-
-  useEffect(() => {
-    if (initialSubjects && initialSubjects.length > 0) {
-      setSubjects(initialSubjects.map((s, i) => ({ ...s, id: i + 1 })))
-      setResult({ totalCredits: 0, totalCreditPoints: 0, gpa: 0 })
-      setError('')
-    }
-  }, [initialSubjects])
 
   const updateSubject = (id, field, value) => {
     setSubjects((prev) => prev.map((s) => (s.id === id ? { ...s, [field]: value } : s)))

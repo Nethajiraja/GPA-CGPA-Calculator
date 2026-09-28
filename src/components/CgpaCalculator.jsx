@@ -1,25 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import SemesterRow from './SemesterRow'
 import { calculateCGPA } from '../utils/calculations'
 
 let nextId = 3
 const createSemester = (id) => ({ id, name: '', gpa: '', credits: '' })
 
-export default function CgpaCalculator({ initialSemesters }) {
+export default function CgpaCalculator() {
   const [semesters, setSemesters] = useState(() => [
     createSemester(1),
     createSemester(2),
   ])
   const [result, setResult] = useState({ totalCredits: 0, weightedPoints: 0, cgpa: 0 })
   const [error, setError] = useState('')
-
-  useEffect(() => {
-    if (initialSemesters && initialSemesters.length > 0) {
-      setSemesters(initialSemesters.map((s, i) => ({ ...s, id: i + 1 })))
-      setResult({ totalCredits: 0, weightedPoints: 0, cgpa: 0 })
-      setError('')
-    }
-  }, [initialSemesters])
 
   const updateSemester = (id, field, value) => {
     setSemesters((prev) => prev.map((s) => (s.id === id ? { ...s, [field]: value } : s)))
